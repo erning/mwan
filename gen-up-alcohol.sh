@@ -8,11 +8,13 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-ISPS=(all_cn chinatelecom unicom_cnc cmcc crtc cernet gwbn othernet)
+#
+# All via ChinaTelecom - Cisco (172.31.19.1)
+#
 
-for ISP in ${ISPS[*]}
-do
-  curl "https://ispip.clang.cn/$ISP.txt" -o "$DIR/feed/$ISP.txt"
-done
-
-curl "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest" -o "$DIR/feed/delegated-apnic-latest"
+echo "ip -batch - <<EOF"
+cat "$DIR/feed/delegated-apnic-latest" | \
+  awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv4" {print $4"/"32-log($5)/log(2)}' | \
+  aggregate | \
+  awk '{print "  route add", $1, "via 172.31.19.1"}'
+echo "EOF"
