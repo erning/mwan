@@ -32,7 +32,6 @@ FILES=()
 for ISP in ${ISPS[*]}
 do
   FILES+=("$DIR/feed/$ISP.txt")
-  echo $ISP
 done
 
 echo "ip -batch - <<EOF"
