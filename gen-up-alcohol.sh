@@ -16,5 +16,5 @@ echo "ip -batch - <<EOF"
 cat "$DIR/feed/delegated-apnic-latest" | \
   awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv4" {print $4"/"32-log($5)/log(2)}' | \
   aggregate | \
-  awk '{print "  route add", $1, "via 172.31.19.1"}'
+  awk '{print "  route add", $1, "table 20 dev pppoe2"}'
 echo "EOF"

@@ -19,8 +19,10 @@ do
   FILES+=("$DIR/feed/$ISP.txt")
 done
 
-echo "ip -batch - <<EOF"
-cat ${FILES[*]} | aggregate | awk '{print "  route add", $1, "via 172.31.17.2"}'
+echo "ipset restore <<EOF"
+echo "create NET_ChinaTelecom hash:net -exist"
+echo "flush NET_ChinaTelecom"
+cat ${FILES[*]} | aggregate | awk '{print "add NET_ChinaTelecom", $1}'
 echo "EOF"
 
 #
@@ -34,6 +36,9 @@ do
   FILES+=("$DIR/feed/$ISP.txt")
 done
 
-echo "ip -batch - <<EOF"
-cat ${FILES[*]} | aggregate | awk '{print "  route add", $1, "via 172.31.17.1"}'
+echo "ipset restore <<EOF"
+echo "create NET_ChinaMobile hash:net -exist"
+echo "flush NET_ChinaMobile"
+cat ${FILES[*]} | aggregate | awk '{print "add NET_ChinaMobile", $1}'
 echo "EOF"
+

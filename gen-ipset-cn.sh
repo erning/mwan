@@ -8,15 +8,11 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-ISPS=(chinatelecom othernet)
-
-FILES=()
-for ISP in ${ISPS[*]}
-do
-  FILES+=("$DIR/feed/$ISP.txt")
-done
-
-echo "ip -batch - <<EOF"
-cat ${FILES[*]} | aggregate | awk '{print "  route add", $1, "via 172.31.17.2"}'
+echo "ipset restore <<EOF"
+echo "create NET_China hash:net -exist"
+echo "flush NET_China"
+cat "$DIR/feed/delegated-apnic-latest" | \
+  awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv4" {print $4"/"32-log($5)/log(2)}' | \
+  aggregate | \
+  awk '{print "add NET_China", $1}'
 echo "EOF"
-
