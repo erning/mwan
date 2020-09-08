@@ -2264,6 +2264,10 @@ add cn-network 103.154.242.0/23
 add cn-network 103.155.14.0/23
 add cn-network 103.155.16.0/23
 add cn-network 103.155.34.0/23
+add cn-network 103.155.48.0/23
+add cn-network 103.155.76.0/23
+add cn-network 103.155.100.0/23
+add cn-network 103.155.110.0/23
 add cn-network 103.192.0.0/19
 add cn-network 103.192.48.0/21
 add cn-network 103.192.56.0/22
@@ -7432,6 +7436,10 @@ add ct-network 103.154.242.0/23
 add ct-network 103.155.14.0/23
 add ct-network 103.155.16.0/23
 add ct-network 103.155.34.0/23
+add ct-network 103.155.48.0/23
+add ct-network 103.155.76.0/23
+add ct-network 103.155.100.0/23
+add ct-network 103.155.110.0/23
 add ct-network 103.192.8.0/21
 add ct-network 103.192.16.0/20
 add ct-network 103.192.128.0/22
