@@ -19,15 +19,15 @@ echo ""
 echo '$IPSET restore <<EOF'
 echo "create cn-network hash:net -exist"
 echo "flush cn-network"
-cat "$DIR/feed/delegated-apnic-latest" | \
-  awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv4" {print $4"/"32-log($5)/log(2)}' | \
-  aggregate | \
-  awk '{print "add cn-network", $1}'
-echo ""
-# cat "$DIR/ip-lists/china.txt" | \
+# cat "$DIR/feed/delegated-apnic-latest" | \
+#   awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv4" {print $4"/"32-log($5)/log(2)}' | \
 #   aggregate | \
 #   awk '{print "add cn-network", $1}'
 # echo ""
+cat "$DIR/ip-lists/china.txt" | \
+  aggregate | \
+  awk '{print "add cn-network", $1}'
+echo ""
 
 
 #
