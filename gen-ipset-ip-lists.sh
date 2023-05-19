@@ -33,7 +33,7 @@ echo ""
 #
 # ChinaTelecom
 #
-ISPS=(chinanet googlecn)
+ISPS=(chinanet unicom googlecn)
 
 FILES=()
 for ISP in ${ISPS[*]}
@@ -50,7 +50,7 @@ echo ""
 #
 # Others
 #
-ISPS=(cmcc cernet cstnet drpeng tietong unicom)
+ISPS=(cmcc cernet cstnet drpeng tietong)
 
 FILES=()
 for ISP in ${ISPS[*]}
