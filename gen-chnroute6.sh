@@ -8,16 +8,6 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-ISPS=(all_cn chinatelecom unicom_cnc cmcc crtc cernet gwbn othernet hk mo tw)
+cat "$DIR/feed/delegated-apnic-latest" | \
+  awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv6" {print $4"/"$5}' 
 
-for ISP in ${ISPS[*]}
-do
-  curl "https://ispip.clang.cn/$ISP.txt" -o "$DIR/feed/$ISP.txt"
-done
-
-for ISP in ${ISPS[*]}
-do
-  curl "https://ispip.clang.cn/${ISP}_ipv6.txt" -o "$DIR/feed/${ISP}_ipv6.txt"
-done
-
-curl "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest" -o "$DIR/feed/delegated-apnic-latest"
