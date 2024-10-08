@@ -8,7 +8,29 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-cat "$DIR/feed/delegated-apnic-latest" | \
-  awk -F '|' '$1=="apnic" && $2=="CN" && $3=="ipv4" {print $4"/"32-log($5)/log(2)}' | \
-  aggregate > "chnroute.ipv4"
+#
+# ChinaTelecom
+#
+ISPS=(chinatelecom)
+
+FILES=()
+for ISP in ${ISPS[*]}
+do
+  FILES+=("$DIR/feed/$ISP.txt")
+done
+
+cat ${FILES[*]} | aggregate > "chnroute-ct.ipv4"
+
+#
+# Others
+#
+ISPS=(unicom_cnc cmcc crtc cernet gwbn othernet)
+
+FILES=()
+for ISP in ${ISPS[*]}
+do
+  FILES+=("$DIR/feed/$ISP.txt")
+done
+
+cat ${FILES[*]} | aggregate > "chnroute-cm.ipv4"
 
